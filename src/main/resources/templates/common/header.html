@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>header</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="/css/default.css">
+	<script src="/js/sweetalert.min.js"></script>
+</head>
+<body>
+	<header class="header">
+		<div class="header-wrap">
+			<div class="logo">
+				<a href="/">PRACTICE CRUD</a>
+			</div>
+			<div class="nav">
+				<ul>
+					<li>
+						<a href="#">게시판</a>
+					</li>
+				</ul>
+			</div>
+			<div class="search-wrap">
+				<div class="search-input">
+					<input type="text" id="searchInput" name="searchInput" placeholder="검색할 게시글을 찾아보세요">
+					<button>검색</button>
+				</div>
+			</div>
+			<div class="nav">
+				<ul class="user-menu">
+					<th:block th:if="${session.user == null}"> <!-- 로그인 안되었을 경우 -->
+						<li>
+							<a href="/user/joinFrm">회원가입</a>
+						</li>
+						<li>
+							<a href="/user/logInFrm">로그인</a>
+						</li>
+					</th:block>
+					<th:block th:if="${session.user != null}"> <!-- 로그인일 경우 -->
+						<li>
+							<a href="/user/myPage" th:text="${session.user.userId}"></a>
+						</li>
+						<li>
+							<a href="/user/logOut">로그아웃</a>
+						</li>
+					</th:block>
+				</ul>
+			</div>
+		</div>
+	</header>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.user.model.dao.UserDao">
+  <insert id="registUser">
+  	insert into user_tbl values(user_tbl_seq.nextval,#{userId},#{userPw},#{userName},#{userEmail},#{userBirth},#{userPhone},#{userGender},#{userAddr},2,sysdate)
+  </insert>
+  <select id="selectOneUser" resultType="user">
+  	select * from user_tbl where user_id=#{userId}
+  </select>
+  <update id="updateUser">
+  	update user_tbl set user_name=#{userName}, user_phone=#{userPhone}, user_addr=#{userAddr} where user_no=#{userNo}
+  </update>
+  <update id="changePw">
+		update user_tbl set user_pw=#{userPw} where user_no=#{userNo}
+	</update>
+	<delete id="userDelete">
+		delete from user_tbl where user_no=#{userNo}
+	</delete>
+	<select id="findOneUser" resultType="user">
+		select user_id from user_tbl where user_name=#{userName} and user_email=#{userEmail}
+	</select>
+</mapper>

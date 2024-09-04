@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+	.join-all-wrap{
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 40px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	}
+	.join-btn{
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	}
+	.join-content{
+	width: 300px;
+	}
+</style>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<div class="join-all-wrap">
+		<h3>회원가입</h3>
+		<form action="/user/join" method="post">
+			<div class="join-wrap">
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userId">아이디 <span id="idCheckMsg"></span></label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userId" id="userId" required>
+						<button type="button" id="idCheckBtn">아이디 중복확인</button>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userPw">비밀번호<span id="pwCheckMsg"></span></label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userPw" id="userPw" required>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userPwRe">비밀번호 확인<span id="pwReCheckMsg"></span></label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userPwRe" id="userPwRe" required>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userName">이름</label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userName" id="userName" required>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userBirth">생년월일</label>
+					</div>
+					<div class="join-content">
+						<input type="date" name="userBirth" id="userBirth" required>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userGender">성별</label>
+					</div>
+					<div class="join-content">
+						<input type="radio" name="userGender" id="m" value="남">
+						<label for="m">남성</label>
+						<input type="radio" name="userGender" id="f" value="여">
+						<label for="f">여성</label>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userEmail">본인확인 이메일</label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userEmail" id="email" placeholder="예) example@example.com" required>
+						<button type="button" id="sendBtn">이메일 전송</button>
+					</div>
+					<div class="join-content">
+						<input type="text" id="authCode" placeholder="인증번호 입력">
+						<button id="authBtn">인증하기</button>
+						<span id="timeZone"></span>
+						<span id="authMsg"></span>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userPhone">휴대전화</label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userPhone" id="userPhone" placeholder="01012341234" required>
+					</div>
+				</div>
+				<div class="join-input-wrap">
+					<div class="join-title">
+						<label for="userAddr">주소</label>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userAddr" id="addr" required>
+						<button type="button" id="searchBtn">주소검색</button>
+					</div>
+					<div class="join-content">
+						<input type="text" name="userAddr" id="detailAddr" placeholder="상세주소를 입력해주세요">						
+					</div>
+				</div>
+				<div class="join-btn">
+					<input type="submit" value="회원가입"></input>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="common/footer"></th:block>
+	<script>
+		//아이디 중복 체크용 비동기
+		$("#idCheckBtn").on("click",function(){
+			const userId = $("#userId").val();
+				$.ajax({
+					url : "/user/checkId",
+					type : "get", //조회 할 아이디
+					data : {userId : userId},
+					success : function(data){
+						if(data == 0){
+							$("#idCheckMsg").text("사용가능한 아이디입니다.");
+							$("#idCheckMsg").css("color","green");
+						}else{
+							$("#idCheckMsg").text("이미 사용중인 아이디입니다.");
+							$("#idCheckMsg").css("color", "red");
+						}
+					},
+					error : function(){
+						console.log("에러");
+					}
+				});
+		});
+		
+		//주소 검색 api
+		$("#searchBtn").on("click", function(){
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		        	$("#addr").val(data.roadAddress); // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            $("#detailAddr").focus(); //앞에 데이터를 받아온 후 상세주소로 넘어오게 focus(); 함수 넣어주기
+		        },
+		        onclose: function(state) {
+		            if(state === 'FORCE_CLOSE'){
+		            } else if(state === 'COMPLETE_CLOSE'){
+		            }
+		        }
+		    }).open();
+		});
+		//비밀번호 유효성 검사
+		$("#userPw").on("keyup",function(){
+			const userPw = $("#userPw").val();
+			const pwReg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{6,14}$/;
+			if(pwReg.test(userPw)){
+				$("#pwCheckMsg").text("사용가능한 비밀번호입니다.");
+				$("#pwCheckMsg").css("color", "green");
+			}else{
+				$("#pwCheckMsg").text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (6~14자이내)");
+				$("#pwCheckMsg").css("color", "red");		
+			}
+			
+		});
+		
+		//비밀번호 일치 확인
+		$("#userPwRe").on("change",function(){
+			const pwValue = $("#userPw").val();
+			const pwReValue = $("#userPwRe").val();
+			if(pwValue === pwReValue){
+				$("#pwReCheckMsg").text("비밀번호가 일치합니다.");
+				$("#pwReCheckMsg").css("color", "green");
+			}else{
+				$("#pwReCheckMsg").text("비밀번호가 일치하지 않습니다.");
+				$("#pwReCheckMsg").css("color", "red");				
+			}
+		});
+		//이메일 인증 보내기
+		let mailCode = null;
+		$("#sendBtn").on("click", function(){
+			const receiver = $("#email").val(); //받을 사람 이메일
+			$.ajax({
+				url : "/user/sendCode",
+				data : {receiver : receiver},
+				type : "post",
+				success : function(data){
+					console.log(data);
+					mailCode = data;
+					$("#auth").show();
+					authTime();
+				},
+				error : function(){
+					console.log("에러");
+				}
+			});
+		});
+		
+		//인증 번호 입력하기
+		let intervalId = null;
+		function authTime(){
+			$("#timeZone").html("<span id='min'>3</span> : <span id='sec'>00</span>");
+			intervalId = window.setInterval(function(){
+				const min = $("#min").text();
+				const sec = $("#sec").text();
+				if(sec == "00"){
+					if(min == "0"){
+						window.clearInterval(intervalId);
+						mailCode = null;
+						$("#authMsg").text("인증시간이 만료되었습니다.");
+						$("#authMsg").css("color", "red");
+					}else{
+						const newMin = Number(min) - 1;
+						$("#min").text(newMin);
+						$("#sec").text(59);
+					}
+				}else{
+					const newSec = Number(sec) -1;
+					if(newSec < 10){
+						$("#sec").text("0"+newSec);
+					}else{
+						$("#sec").text(newSec);
+					}
+				}
+			},1000);
+		}
+		$("#authBtn").on("click",function(){
+			const authCode = $("#authCode").val();
+			if(authCode == mailCode){
+				$("#authMsg").text("인증완료");
+				$("#authMsg").css("color","blue");
+				
+				window.clearInterval(intervalId);
+				$("#email").prop("readonly",true);
+				$("#sendBtn").prop("disabled",true);
+				$("#authCode").prop("readonly",true);
+				$("#authBtn").prop("disabled",true);
+				$("#timeZone").remove();
+			}else{
+				$("#authMsg").text("인증번호를 확인하세요.");
+				$("#authMsg").css("color","red");
+			}
+		});
+		
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 찾기</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<div class="findPw-wrap">
+		<h3>비밀번호 찾기</h3>
+			<div>
+				<div>
+					<label for="userId">아이디 : </label>
+					<input type="text" name="userId" id="userId">
+				</div>
+				<div>
+					<label for="userName">이름 : </label>
+					<input type="text" name="userName" id="userName">
+				</div>
+				<form action="/user/changePw" id="changePwFrm" method="post">
+				<div class="change-wrap">
+					<label for="userPw">새 비밀번호 입력<span id="pwCheckMsg"></span></label>
+					<input type="text" name="userPw" id="userPw">
+				</div>
+				<div class="change-wrap">
+					<label for="userPwRe">새 비밀번호 확인<span id="pwReCheckMsg"></span></label>
+					<input type="text" name="userPwRe" id="userPwRe">
+				</div>
+				<div class="change-wrap">
+					<input type="hidden" name="userNo" th:value="${userNo}">
+					<input type="submit" value="변경하기" onclick="return checkPw();">
+				</div>
+			</form>
+			</div>
+		</div>
+	<th:block th:include="common/footer"></th:block>
+</body>
+	<script>
+		//아이디 이메일 일치 하는지
+		function idNameCheck(userId, userName){
+			const findId = $("#userId").val();
+			const findName = $("#userName").val();
+			
+			$.ajax({
+				url : "/user/changeNewPw",
+				data : {userId:findId , userName : findName},
+				type : "post",
+				success : function(data){
+					console.log(data);
+				},
+				error : function(data){
+					console.log(error);
+				}
+			});
+		}
+		
+		//비밀번호 유효성 검사
+		$("#userPw").on("keyup",function(){
+			const userPw = $("#userPw").val();
+			const pwReg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{6,14}$/;
+			if(pwReg.test(userPw)){
+				$("#pwCheckMsg").text("사용가능한 비밀번호입니다.");
+				$("#pwCheckMsg").css("color", "green");
+			}else{
+				$("#pwCheckMsg").text("영문 대소문자/숫자/특수문자(!@#$%) 조합이 필요합니다 (6~14자이내)");
+				$("#pwCheckMsg").css("color", "red");		
+			}
+			
+		});
+		
+		//비밀번호 일치 확인
+		$("#userPwRe").on("change",function(){
+			const pwValue = $("#userPw").val();
+			const pwReValue = $("#userPwRe").val();
+			if(pwValue === pwReValue){
+				$("#pwReCheckMsg").text("비밀번호가 일치합니다.");
+				$("#pwReCheckMsg").css("color", "green");
+			}else{
+				$("#pwReCheckMsg").text("비밀번호가 일치하지 않습니다.");
+				$("#pwReCheckMsg").css("color", "red");				
+			}
+		});
+	</script>
+</html>

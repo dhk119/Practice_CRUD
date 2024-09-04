@@ -1,0 +1,67 @@
+*{
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	list-style-type: none;
+}
+.header{
+	background: #bdc3c7;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	padding: 20px;
+}
+.header-wrap{
+	width: 1400px;
+	margin: 0 auto;
+	display: flex;
+	gap: 100px;
+}
+
+ul{
+	list-style-type: none;
+	display: flex;	
+}
+ul>li{
+	align-items: center;
+}
+a{
+	text-decoration: none;
+	margin: 0 50px;
+}
+.content{
+	min-height: 830px
+}
+
+.footer{
+	background-color: #ccc;
+	padding: 20px;
+}
+.footer > div{
+	display: flex;
+	margin: 0 auto;
+	justify-content: left;
+	gap: 100px;
+}
+.join-all-wrap{
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px auto;
+}
+.join-all-wrap>h3{
+	text-align: center;
+	margin: 30px auto;
+}
+.join-input-wrap{
+	padding: 10px;
+}
+
+.update-all-wrap{
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px auto;
+}
+.findPw-wrap{
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px auto;
+}

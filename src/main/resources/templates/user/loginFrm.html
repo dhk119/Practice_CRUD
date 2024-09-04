@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인 페이지</title>
+</head>
+<style>
+	.login-all-wrap{
+	width: 1200px;
+	border: 1px solid #ccc;
+	margin: 50px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	}
+	.login-wrap{
+	margin: 30px auto;
+	}
+	.login-content>input{
+		width: 50%;
+		height: 30px;
+	}
+	.login-btn{
+		display: flex;
+		justify-content: center;
+		margin-top: 20px;
+	}
+</style>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<div class="login-all-wrap">
+		<h3>로그인</h3>
+		<form action="/user/logIn" method="post">
+			<div class="login-wrap">
+				<div class="login-input-wrap">
+					<label for="userId">아이디</label>
+				</div>
+				<div class="login-content">
+					<input type="text" name="userId" id="userId">
+				</div>
+			<div class="login-wrap">
+				<div class="login-input-wrap">
+					<label for="userPw">비밀번호</label>
+				</div>
+				<div class="login-content">
+					<input type="text" name="userPw" id="userPw">
+				</div>
+			</div>
+			<div class="login-wrap">
+				<div>
+					<a href="/user/joinFrm">회원가입</a>
+					<a href="/user/findIdFrm">아이디찾기</a>
+					|
+					<a href="/user/findPw">비밀번호찾기</a>
+				</div>
+				<div class="login-btn">
+					<input type="submit" value="로그인">
+				</div>
+			</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
