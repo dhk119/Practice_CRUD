@@ -6,7 +6,13 @@
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-	.join-all-wrap{
+	*{
+	margin: 0;
+  	padding: 0;
+  	outline: 0;
+  	list-style-type: none;
+	}
+	.input-all-wrap{
 	width: 1200px;
 	border: 1px solid #ccc;
 	margin: 40px auto;
@@ -14,105 +20,125 @@
 	flex-direction: column;
 	align-items: center;
 	}
-	.join-btn{
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+	.page-title{
+	padding: 30px;
+	text-align: center;
+	font-size: 20px;
+	color: #2193b0;
 	}
-	.join-content{
-	width: 300px;
-	}
+	.input-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.input-wrap > .input-title {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+.input-item {
+  display: flex;
+  gap: 10px;
+}
+.input-item > input {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid #2193b0;
+  padding: 8px 0px;
+}
 </style>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<div class="join-all-wrap">
-		<h3>회원가입</h3>
+	<section class="section join-wrap">
+		<div class="page-title">회원가입</div>
 		<form action="/user/join" method="post">
-			<div class="join-wrap">
-				<div class="join-input-wrap">
-					<div class="join-title">
+			<div class="input-all-wrap">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userId">아이디 <span id="idCheckMsg"></span></label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userId" id="userId" required>
 						<button type="button" id="idCheckBtn">아이디 중복확인</button>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userPw">비밀번호<span id="pwCheckMsg"></span></label>
 					</div>
-					<div class="join-content">
+					<div class="input-content">
 						<input type="text" name="userPw" id="userPw" required>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userPwRe">비밀번호 확인<span id="pwReCheckMsg"></span></label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userPwRe" id="userPwRe" required>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userName">이름</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userName" id="userName" required>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userBirth">생년월일</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="date" name="userBirth" id="userBirth" required>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userGender">성별</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="radio" name="userGender" id="m" value="남">
 						<label for="m">남성</label>
 						<input type="radio" name="userGender" id="f" value="여">
 						<label for="f">여성</label>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userEmail">본인확인 이메일</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userEmail" id="email" placeholder="예) example@example.com" required>
 						<button type="button" id="sendBtn">이메일 전송</button>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" id="authCode" placeholder="인증번호 입력">
 						<button id="authBtn">인증하기</button>
 						<span id="timeZone"></span>
 						<span id="authMsg"></span>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userPhone">휴대전화</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userPhone" id="userPhone" placeholder="01012341234" required>
 					</div>
 				</div>
-				<div class="join-input-wrap">
-					<div class="join-title">
+				<div class="input-wrap">
+					<div class="input-title">
 						<label for="userAddr">주소</label>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userAddr" id="addr" required>
 						<button type="button" id="searchBtn">주소검색</button>
 					</div>
-					<div class="join-content">
+					<div class="input-item">
 						<input type="text" name="userAddr" id="detailAddr" placeholder="상세주소를 입력해주세요">						
 					</div>
 				</div>
@@ -121,7 +147,7 @@
 				</div>
 			</div>
 		</form>
-	</div>
+	</section>
 	<th:block th:include="common/footer"></th:block>
 	<script>
 		//아이디 중복 체크용 비동기
