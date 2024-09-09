@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판</title>
+</head>
+<style>
+.board-list{
+	width: 1200px;
+}
+.first-btn{
+	cursor: pointer;
+	font-size: 14px;
+	padding: 9px 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #2193b0;
+	text-align: center;
+	box-sizing: border-box;
+	color: #fff;
+}
+.first-btn:hover{
+	background-color: #6dd5ed;
+}
+</style>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<section class="section board-list">
+		<a href="/board/boardFrm" class="first-btn">글쓰기</a>
+		<div class="board-list-wrap">
+			<ul class="posting-wrap">
+				<li class="posting-item">
+					<div class="posting-img">
+						<img src="/image/default_img.png">
+					</div>
+					<div class="posting-info">
+						<div class="posting-title">제목</div>
+						<div class="posting-sub-info">
+							<span>글쓴이</span>						
+							<span>2024-09-97</span>						
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="board-paging-wrap">
+			<ul>
+				<li>
+					<span class="material-icons page-item">first_page</span>
+				</li>
+				<li>
+					<span class="material-icons page-item">navigate_before</span>
+				</li>
+				<li>
+					<span class="page-item">1</span>
+				</li>
+				<li>
+					<span class="page-item">2</span>
+				</li>
+				<li>
+					<span class="page-item">3</span>
+				</li>
+				<li>
+					<span class="page-item">4</span>
+				</li>
+				<li>
+					<span class="page-item">5</span>
+				</li>
+				<li>
+					<span class="material-icons page-item">navigate_next</span>
+				</li>
+				<li>
+					<span class="material-icons page-item">last_page</span>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<th:block th:include="common/footer"></th:block>
+</body>
+<script>
+	$(".posting-wrap").on("click",function(){
+		location.href = "/board/view";
+	})
+</script>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>글쓰기</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+		<div>
+			<div class="board-thumb-wrap">
+				<img src="/image/default_img.png" name="boardImg" class="changeThumb">
+			</div>
+			<div class="board-info-wrap">
+				<table class="tbl">
+					<tbody>
+						<tr>
+							<th style="width: 30%">
+								<label for="boardTitle">제목</label>
+							</th>
+							<td>
+								<div class="input-item">
+									<input type="text" id="boardTitle" name="boardTitle">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td class="left">로그인된 아이디 표기</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="boardFile">첨부파일</label>
+							</th>
+							<td class="left">
+								<label for="boardFile" class="first-btn">파일 첨부</label>
+								<input type="file" id="boardFile" style="display: none" multiple>
+							</td>
+						</tr>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	<th:block th:include="common/footer"></th:block>
+</body>
+<script>
+	$(".changeThumb").on("click", function(){
+		const thumbnail = $("#boardImg").val();
+		swal({
+			title:"등록하시겠겠습니까?",
+			icon:"warning",
+			showCancelButton: true,
+			confirmButtonColor:"green",
+			confirmButtonText:"예",
+			cancelButtonText:"아니요",
+			closeOnConfirm: false,
+			closeOnCancel : true
+		}, function(isConfirm){
+			if(!isConfirm) return;			
+			$.ajax({
+				url: "/board/changeThumbnail",
+				type: "post",
+				data: {thumbnail : boardImg},
+				success: function(data){
+					if(data == 0){
+						alert("성공!");
+					}else{
+						alert("실패!");
+					}
+				},
+				error: function(){
+					console.log("에러");
+				}
+			});
+		});
+	});
+</script>
+</html>

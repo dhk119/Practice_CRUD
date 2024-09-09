@@ -69,3 +69,12 @@ a{
 	border: 1px solid #ccc;
 	margin: 50px auto;
 }
+[class^="-btn"]{
+	cursor: pointer;
+	font-size: 14px;
+	padding: 9px 20px;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	box-sizing: border-box;
+}

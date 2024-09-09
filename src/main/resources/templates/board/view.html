@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상세보기</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+		<section class="section board-view-wrap">
+			<div class="page-title">게시글</div>
+			<div class="board-view-content">
+				<div class="board-view-info">
+					<div class="board-thumbnail">
+						<img src="/image/default_img.png">
+					</div>
+					<div class="board-view-preview">
+						<table class="tbl">
+							<tbody>
+								<tr>
+									<td colspan="4">게시글 제목</td>
+								</tr>
+								<tr>
+									<th style="width:20%">작성자</th>
+									<td style="width: 30%">닉네임</td>
+									<th style="width:20%">작성일</th>
+									<td style="width: 30%">2024-09-07</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="file-title">첨부파일</p>
+						<div class="file-zone">
+							<div class="board-file">
+								<span class="material-icons file-icon">file_download</span>
+								<span class="file-name">파일이름</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="board-content-wrap">
+					<textarea></textarea>
+				</div>
+				<div class="view-btn-zone">
+					<a href="#">수정</a>
+					<button type="button" class="second-btn">삭제</button>
+				</div>
+			</div>
+		</section>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
